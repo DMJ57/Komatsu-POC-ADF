@@ -83,7 +83,7 @@ jobs:
     needs: build
     uses: ./.github/workflows/Factory.yml
     with: 
-      branch: 'feature-*'
+      branch: feature-ADF-code
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
