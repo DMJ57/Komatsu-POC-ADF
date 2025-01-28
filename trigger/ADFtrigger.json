@@ -1,5 +1,5 @@
 {
-	"name": "ADFtrigger",
+	"name": "trigger1",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
@@ -8,18 +8,15 @@
 				"pipelineReference": {
 					"referenceName": "pipeline1",
 					"type": "PipelineReference"
-				},
-				"parameters": {
-					"isbool": true
 				}
 			}
 		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
-				"frequency": "Minute",
-				"interval": 30,
-				"startTime": "2025-01-29T17:32:00",
+				"frequency": "Hour",
+				"interval": 12,
+				"startTime": "2025-01-28T14:51:00",
 				"timeZone": "India Standard Time"
 			}
 		}
