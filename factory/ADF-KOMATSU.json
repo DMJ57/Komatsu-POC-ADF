@@ -5,17 +5,13 @@
 			"isTrue": {
 				"type": "bool",
 				"value": true
-			},
-			"isFalse": {
-				"type": "bool",
-				"value": false
 			}
 		}
 	},
 	"location": "eastus",
 	"identity": {
 		"type": "SystemAssigned",
-		"principalId": "ff73c57c-dded-44ef-83b4-58a6ce3121bb",
+		"principalId": "35a00dbf-9eb9-4f5f-bd43-999013a5afc1",
 		"tenantId": "351ea326-1a66-4da2-addd-15d37c541283"
 	}
 }
