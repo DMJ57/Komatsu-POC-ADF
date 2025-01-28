@@ -1,0 +1,69 @@
+name: Deploy Datasets
+
+on:
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
+    secrets:
+      AZURE_CLIENT_ID:
+        required: true
+      AZURE_CLIENT_SECRET:
+        required: true
+      AZURE_SUBSCRIPTION_ID:
+        required: true
+      AZURE_TENANT_ID:
+        required: true
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install jq
+        run: sudo apt-get install jq
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          creds: >
+                {
+                  "clientId":"${{ secrets.AZURE_CLIENT }}",
+                  "clientSecret":"${{ secrets.AZURE_CLIENT }}",
+                  "subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}",
+                  "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
+                }
+          enable-AzPSSession: true
+
+      - name: Read pipeline Dataset JSON files and deploy
+        run: |
+          # Ensure the correct path to the JSON files
+          dataset1=$(cat ./dataset/Json3.json)
+          dataset2=$(cat ./dataset/Json4.json)
+
+          # Construct a JSON array with the dataset contents
+          datasets=$(jq -n \
+            --arg dataset1 "$dataset1" \
+            --arg dataset2 "$dataset2" \
+            '[
+              {
+                "name": "Json3",
+                "definition": $dataset1 | fromjson
+              },
+              {
+                "name": "Json4",
+                "definition": $dataset2 | fromjson
+              }
+            ]')
+
+          # Deploy using Bicep (or ARM template)
+          az deployment group create \
+            --resource-group "komatsu" \
+            --template-file ./bicep/modules/dataset.bicep \
+            --parameters dataFactoryName=Komatsu-POC-ADF \
+            --parameters datasets="$datasets"

@@ -1,0 +1,66 @@
+name: Deploy ADF LinkedService
+
+on:
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
+    secrets:
+      AZURE_CLIENT_ID:
+        required: true
+      AZURE_CLIENT_SECRET:
+        required: true
+      AZURE_SUBSCRIPTION_ID:
+        required: true
+      AZURE_TENANT_ID:
+        required: true
+
+jobs:
+  
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install jq
+      run: sudo apt-get install jq
+
+    - name: Log in to Azure
+      uses: azure/login@v2
+      with:
+        creds: >
+              {
+                "clientId":"${{ secrets.AZURE_CLIENT }}",
+                "clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}",
+                "subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}",
+                "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
+              }
+        enable-AzPSSession: true
+
+    - name: Read linkedService JSON files and deploy
+      run: |
+        linkedService1=$(cat ./linkedService/AzureBlobStorage1.json)
+        linkedService2=$(cat ./linkedService/AzureBlobStorage333.json)
+
+        linkedServices=$(jq -n \
+          --arg linkedService1 "$linkedService1" \
+          --arg linkedService2 "$linkedService2" \
+          '[ 
+            {
+              "name": "AzureBlobStorage1", 
+              "definition": $linkedService1 | fromjson 
+            }, 
+            { 
+              "name": "AzureBlobStorage333", 
+              "definition": $linkedService2 | fromjson 
+            } 
+          ]')
+
+        az deployment group create \
+          --resource-group "komatsu" \
+          --template-file ./bicep/modules/linkedservice.bicep \
+          --parameters dataFactoryName=Komatsu-POC-ADF \
+          --parameters linkedServices="$linkedServices"

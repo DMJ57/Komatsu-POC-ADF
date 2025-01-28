@@ -1,0 +1,18 @@
+{
+    "name": "AzureBlobStorage1",
+    "properties": {
+        "annotations": [],
+        "type": "AzureBlobStorage",
+        "typeProperties": {
+            "connectionString": {
+                "type": "AzureKeyVaultSecret",
+                "store": {
+                    "referenceName": "AzureKeyVault1",
+                    "type": "LinkedServiceReference"
+                },
+                "secretName": "kx-demo-constring-dev"
+            }
+        }
+    },
+    "type": "Microsoft.DataFactory/factories/linkedservices"
+}
