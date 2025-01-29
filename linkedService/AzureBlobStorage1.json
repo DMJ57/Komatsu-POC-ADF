@@ -11,14 +11,6 @@
             "type": "LinkedServiceReference"
           },
           "secretName": "test1"
-        },
-        "encryptedCredential": {
-          "type": "AzureKeyVaultSecret",
-          "store": {
-            "referenceName": "AzureKeyVault1",
-            "type": "LinkedServiceReference"
-          },
-          "secretName": "test2"
         }
       }
     },
