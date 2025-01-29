@@ -57,4 +57,5 @@ jobs:
         az deployment group create \
           --resource-group "komatsu" \
           --template-file ./bicep/modules/testadf.bicep \
+          --parameters dataFactoryName=DMJTest \
           --parameters pipelines="$pipelines"
