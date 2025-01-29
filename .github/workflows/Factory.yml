@@ -49,6 +49,6 @@ jobs:
           az deployment group create \
             --resource-group "komatsu" \
             --template-file ./bicep/modules/factory.bicep \
-            --parameters dataFactoryName=Komatsu-POC-ADF \
+            --parameters dataFactoryName=DMJTest \
             --parameters properties="$globalParams"
       
