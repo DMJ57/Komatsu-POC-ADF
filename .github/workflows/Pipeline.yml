@@ -41,7 +41,7 @@ jobs:
     - name: Read pipeline JSON files and deploy
       run: |
         # Ensure the correct path to the JSON files
-        pipeline1=$(cat ./pipeline/pipeline1.json)
+        pipeline1=$(cat ./pipeline/pipeline.json)
 
         # Construct a JSON array with the pipeline contents
         pipelines=$(jq -n \

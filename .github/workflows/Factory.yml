@@ -42,7 +42,7 @@ jobs:
 
     - name: Read factory JSON files and deploy
       run: |
-          factory1=$(cat ./factory/ADF-KOMATSU.json)
+          factory1=$(cat ./factory/ADF.json)
           # Ensure the globalParameters are passed correctly
           globalParams=$(echo "$factory1" | jq -r '.properties | @json')
           echo "Global Parameters: $globalParams"

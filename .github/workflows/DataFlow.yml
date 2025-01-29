@@ -43,7 +43,7 @@ jobs:
       - name: Read pipeline dataflow JSON files and deploy
         run: |
           # Ensure the correct path to the JSON files
-          dataflow1=$(cat ./dataflow/dataflow2.json)
+          dataflow1=$(cat ./dataflow/dataflow.json)
 
           # Construct a JSON array with the dataflow contents
           dataflows=$(jq -n \
