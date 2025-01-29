@@ -50,7 +50,7 @@ jobs:
             --arg dataflow1 "$dataflow1" \
             '[
               {
-                "name": "dataflow2",
+                "name": "dataflowPOC",
                 "definition": $dataflow1 | fromjson
               }
             ]')

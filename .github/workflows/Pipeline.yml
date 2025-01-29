@@ -48,7 +48,7 @@ jobs:
           --arg pipeline1 "$pipeline1" \
           '[
             {
-              "name": "pipeline1",
+              "name": "pipelinePOC",
               "definition": $pipeline1 | fromjson
             }
           ]')

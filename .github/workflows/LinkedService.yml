@@ -57,11 +57,11 @@ jobs:
             --arg linkedService1 "$linkedService1" \
             '[
               {
-                "name": "AzureKeyVault1", 
+                "name": "AzureKeyVaultPOC", 
                 "definition": $keyVaultLinkedService | fromjson 
               },
               {
-                "name": "AzureBlobStorage1", 
+                "name": "AzureBlobStoragePOC", 
                 "definition": $linkedService1 | fromjson 
               }
             ]')
