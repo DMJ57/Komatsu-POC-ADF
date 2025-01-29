@@ -8,45 +8,7 @@ on:
       - 'v*'
 
 jobs: 
-  # versioning:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
-
-  #     - name: Get the most recent tag
-  #       id: get_tag
-  #       run: |
-  #           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-  #           echo "Last tag: $LAST_TAG"
-  #           echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
   
-  #     - name: Increment version
-  #       run: |
-  #           VERSION=${LAST_TAG#v}
-  #           MAJOR=$(echo $VERSION | cut -d '.' -f 1)
-  #           MINOR=$(echo $VERSION | cut -d '.' -f 2)
-  #           PATCH=$(echo $VERSION | cut -d '.' -f 3)
-  
-  #           PATCH=$((PATCH + 1))  # Increment the patch version by 1
-  #           NEW_VERSION="v$MAJOR.$MINOR.$PATCH"
-  
-  #           echo "New version: $NEW_VERSION"
-  #           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-  
-  #     - name: Create and push new tag
-  #       run: |
-  #           git config --global user.email "dmj571999@gmail.com"  # Set your Git email
-  #           git config --global user.name "DMJ57"  # Set your Git username
-  
-  #           # Create an annotated tag
-  #           git tag -a $NEW_VERSION -m "Release version $NEW_VERSION"
-  
-  #           # Push the new tag to GitHub
-  #           git push origin $NEW_VERSION
-
   build:
     runs-on: ubuntu-latest
 
@@ -131,3 +93,4 @@ jobs:
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
+      
