@@ -56,6 +56,6 @@ jobs:
         # Deploy using Bicep (or ARM template)
         az deployment group create \
           --resource-group "komatsu" \
-          --template-file ./bicep/modules/testadf.bicep \
+          --template-file ./bicep/modules/pipeline.bicep \
           --parameters dataFactoryName=PresentationPOC \
           --parameters pipelines="$pipelines"

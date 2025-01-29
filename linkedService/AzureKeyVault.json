@@ -1,5 +1,5 @@
 {
-    "name": "AzureKeyVault1",
+    "name": "AzureKeyVaultPOC",
     "properties": {
         "annotations": [],
         "type": "AzureKeyVault",

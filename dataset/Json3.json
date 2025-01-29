@@ -2,7 +2,7 @@
     "name": "Json3",
     "properties": {
         "linkedServiceName": {
-            "referenceName": "AzureBlobStorage1",
+            "referenceName": "AzureBlobStoragePOC",
             "type": "LinkedServiceReference"
         },
         "annotations": [],

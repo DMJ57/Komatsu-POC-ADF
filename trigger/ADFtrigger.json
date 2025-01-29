@@ -1,12 +1,12 @@
 {
-	"name": "trigger1",
+	"name": "ADFTrigger",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "pipeline1",
+					"referenceName": "pipelinePOC",
 					"type": "PipelineReference"
 				}
 			}
