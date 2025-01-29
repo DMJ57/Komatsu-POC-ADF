@@ -57,5 +57,5 @@ jobs:
           az deployment group create \
             --resource-group "komatsu" \
             --template-file ./bicep/modules/trigger.bicep \
-            --parameters dataFactoryName=DMJTest \
+            --parameters dataFactoryName=PresentationPOC \
             --parameters triggers="$TestTrigger"

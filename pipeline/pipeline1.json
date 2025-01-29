@@ -1,5 +1,5 @@
 {
-	"name": "pipelinePOC",
+	"name": "pipeline1",
 	"properties": {
 		"activities": [
 			{
@@ -38,7 +38,7 @@
 					},
 					"ifTrueActivities": [
 						{
-							"name": "Data flow1",
+							"name": "Data flow2",
 							"type": "ExecuteDataFlow",
 							"dependsOn": [],
 							"policy": {
@@ -51,7 +51,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataflow": {
-									"referenceName": "dataflow1",
+									"referenceName": "dataflow2",
 									"type": "DataFlowReference"
 								},
 								"compute": {
