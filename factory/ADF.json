@@ -1,5 +1,5 @@
 {
-	"name": "NewDataFactoryForInrfa",
+	"name": "PostDeploymentFactory",
 	"properties": {
 		"globalParameters": {
 			"isTrue": {
@@ -14,6 +14,8 @@
 	},
 	"location": "eastus",
 	"identity": {
-		"type": "SystemAssigned"
+		"type": "SystemAssigned",
+		"principalId": "35a00dbf-9eb9-4f5f-bd43-999013a5afc1",
+		"tenantId": "351ea326-1a66-4da2-addd-15d37c541283"
 	}
 }
