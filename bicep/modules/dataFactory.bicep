@@ -1,8 +1,8 @@
-param factoryName string
+param dataFactoryName string
 param location string = resourceGroup().location
 
 resource adf 'Microsoft.DataFactory/factories@2018-06-01' = {
-  name: factoryName
+  name: dataFactoryName
   location: location
   properties: {
     
