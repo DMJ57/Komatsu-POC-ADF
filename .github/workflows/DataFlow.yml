@@ -64,6 +64,6 @@ jobs:
           az deployment group create \
             --resource-group "komatsu" \
             --template-file ./bicep/modules/dataflow.bicep \
-            --parameters dataFactoryName=PostDeploymentFactory \
+            --parameters dataFactoryName=NewDataFactoryForInrfa \
             --parameters dataflows="$dataflows"\
             --parameters properties="$globalParams"

@@ -62,6 +62,6 @@ jobs:
           az deployment group create \
             --resource-group "komatsu" \
             --template-file ./bicep/modules/trigger.bicep \
-            --parameters dataFactoryName=PostDeploymentFactory \
+            --parameters dataFactoryName=NewDataFactoryForInrfa \
             --parameters triggers="$TestTrigger"\
             --parameters properties="$globalParams"
