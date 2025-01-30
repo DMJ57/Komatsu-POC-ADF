@@ -6,6 +6,10 @@
 				"type": "bool",
 				"value": true
 			}
+		},
+		"globalConfigurations": {
+			"PipelineBillingEnabled": "true",
+			"PolicyValidationEnabled": "true"
 		}
 	},
 	"location": "eastus",
