@@ -61,6 +61,6 @@ jobs:
         az deployment group create \
           --resource-group "komatsu" \
           --template-file ./bicep/modules/pipeline.bicep \
-          --parameters dataFactoryName=PostPOC \
+          --parameters dataFactoryName=PostDeploymentFactory \
           --parameters pipelines="$pipelines"\
           --parameters properties="$globalParams"

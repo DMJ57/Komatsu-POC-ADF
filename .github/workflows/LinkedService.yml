@@ -73,7 +73,7 @@ jobs:
           az deployment group create \
             --resource-group "komatsu" \
             --template-file ./bicep/modules/linkedservice.bicep \
-            --parameters dataFactoryName=PostPOC \
+            --parameters dataFactoryName=PostDeploymentFactory \
             --parameters linkedServices="$linkedServices" \
             --parameters properties="$globalParams"
             
