@@ -3,9 +3,17 @@ targetScope = 'resourceGroup'  // Set targetScope to resourceGroup
 param dataFactoryName string
 param datasets array
 
+param properties object 
+
+
+
 resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
   name: dataFactoryName
-  location: 'East US'
+  location: 'eastus'
+  identity: {
+    type: 'SystemAssigned'
+  }
+  properties:properties
 }
 
 

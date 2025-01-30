@@ -47,6 +47,10 @@ jobs:
 
     - name: Read linkedService JSON files and deploy
       run: |
+          factory1=$(cat ./factory/ADF.json)
+          # Ensure the globalParameters are passed correctly
+          globalParams=$(echo "$factory1" | jq -r '.properties | @json')
+          echo "Global Parameters: $globalParams" 
           keyVaultLinkedService=$(cat ./linkedService/AzureKeyVault.json)
           keyVaultLinkedService=$(echo "$keyVaultLinkedService" | jq --arg keyVaultUrl "https://${{env.keyVaultName}}.vault.azure.net/" '.properties.typeProperties.baseUrl = $keyVaultUrl')
           linkedService1=$(cat ./linkedService/AzureBlobStorage.json)
@@ -69,6 +73,7 @@ jobs:
           az deployment group create \
             --resource-group "komatsu" \
             --template-file ./bicep/modules/linkedservice.bicep \
-            --parameters dataFactoryName=PresentationPOC \
-            --parameters linkedServices="$linkedServices" 
+            --parameters dataFactoryName=PostPOC \
+            --parameters linkedServices="$linkedServices" \
+            --parameters properties="$globalParams"
             

@@ -40,6 +40,10 @@ jobs:
 
     - name: Read pipeline JSON files and deploy
       run: |
+        factory1=$(cat ./factory/ADF.json)
+          # Ensure the globalParameters are passed correctly
+          globalParams=$(echo "$factory1" | jq -r '.properties | @json')
+          echo "Global Parameters: $globalParams" 
         # Ensure the correct path to the JSON files
         pipeline1=$(cat ./pipeline/pipeline.json)
 
@@ -57,5 +61,6 @@ jobs:
         az deployment group create \
           --resource-group "komatsu" \
           --template-file ./bicep/modules/pipeline.bicep \
-          --parameters dataFactoryName=PresentationPOC \
-          --parameters pipelines="$pipelines"
+          --parameters dataFactoryName=PostPOC \
+          --parameters pipelines="$pipelines"\
+          --parameters properties="$globalParams"
