@@ -27,7 +27,7 @@ jobs:
                 "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
               }
 
-  deploy-GlobalParameters:
+  deploy-ADF:
     needs: build
     uses: ./.github/workflows/Factory.yml
     with: 

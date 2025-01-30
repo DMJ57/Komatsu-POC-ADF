@@ -46,9 +46,94 @@ jobs:
           # Ensure the globalParameters are passed correctly
           globalParams=$(echo "$factory1" | jq -r '.properties | @json')
           echo "Global Parameters: $globalParams"
+    
+          keyVaultLinkedService=$(cat ./linkedService/AzureKeyVault.json)
+          keyVaultLinkedService=$(echo "$keyVaultLinkedService" | jq --arg keyVaultUrl "https://${{env.keyVaultName}}.vault.azure.net/" '.properties.typeProperties.baseUrl = $keyVaultUrl')
+          linkedService1=$(cat ./linkedService/AzureBlobStorage.json)
+          linkedService1=$(echo "$linkedService1" | jq --arg connectionSecretName "${{env.connectionSecretName}}" '.properties.typeProperties.connectionString.secretName = $connectionSecretName')  
+          
+          linkedServices=$(jq -n \
+            --arg keyVaultLinkedService "$keyVaultLinkedService" \
+            --arg linkedService1 "$linkedService1" \
+            '[
+              {
+                "name": "AzureKeyVaultPOC", 
+                "definition": $keyVaultLinkedService | fromjson 
+              },
+              {
+                "name": "AzureBlobStoragePOC", 
+                "definition": $linkedService1 | fromjson 
+              }
+            ]')
+    
+          # Ensure the correct path to the JSON files
+          dataset1=$(cat ./dataset/Json3.json)
+          dataset2=$(cat ./dataset/Json4.json)
+
+          # Construct a JSON array with the dataset contents
+          datasets=$(jq -n \
+            --arg dataset1 "$dataset1" \
+            --arg dataset2 "$dataset2" \
+            '[
+              {
+                "name": "Json3",
+                "definition": $dataset1 | fromjson
+              },
+              {
+                "name": "Json4",
+                "definition": $dataset2 | fromjson
+              }
+            ]')
+
+          # Ensure the correct path to the JSON files
+          dataflow1=$(cat ./dataflow/dataflow.json)
+
+          # Construct a JSON array with the dataflow contents
+          dataflows=$(jq -n \
+            --arg dataflow1 "$dataflow1" \
+            '[
+              {
+                "name": "dataflowPOC",
+                "definition": $dataflow1 | fromjson
+              }
+            ]')
+
+          # Ensure the correct path to the JSON files
+          pipeline1=$(cat ./pipeline/pipeline.json)
+
+          # Construct a JSON array with the pipeline contents
+          pipelines=$(jq -n \
+            --arg pipeline1 "$pipeline1" \
+            '[
+              {
+                "name": "pipelinePOC",
+                "definition": $pipeline1 | fromjson
+              }
+            ]')
+
+          # Ensure the correct path to the JSON files
+          TestTrigger1=$(cat ./trigger/ADFtrigger.json)
+
+          # Construct a JSON array with the Trigger contents
+          TestTrigger=$(jq -n \
+            --arg TestTrigger1 "$TestTrigger1" \
+            '[
+              {
+                "name": "ADFtrigger",
+                "definition": $TestTrigger1 | fromjson
+              }
+            ]')
+               
           az deployment group create \
             --resource-group "komatsu" \
             --template-file ./bicep/modules/factory.bicep \
             --parameters dataFactoryName=PostPOC \
-            --parameters properties="$globalParams"
+            --parameters properties="$globalParams"\
+            --parameters linkedServices="$linkedServices"\
+            --parameters datasets="$datasets"\
+            --parameters dataflows="$dataflows"\
+            --parameters pipelines="$pipelines"\
+            --parameters triggers="$TestTrigger"
+
+
       
