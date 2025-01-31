@@ -50,8 +50,7 @@ jobs:
           az deployment group create \
             --resource-group "komatsu" \
             --template-file ./bicep/modules/dataFactory.bicep \
-            --parameters dataFactoryName="TestingWithoutJson" \
+            --parameters dataFactoryName="WithoutJson" \
             --parameters keyVaultName="${{env.keyVaultName}}" \
-            --parameters blobStorageAccountName="komatsu33" \
-            --parameters blobStorageAccountKeySecretName="${{env.connectionSecretName}}" \
+            --parameters blobStorageSecretName="${{env.connectionSecretName}}" \
             
