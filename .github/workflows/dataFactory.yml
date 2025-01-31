@@ -51,4 +51,7 @@ jobs:
             --resource-group "komatsu" \
             --template-file ./bicep/modules/dataFactory.bicep \
             --parameters dataFactoryName="TestingWithoutJson" \
+            --parameters keyVaultName="${{env.keyVaultName}}" \
+            --parameters blobStorageAccountName= "komatsu33" \
+            --parameters blobStorageAccountKeySecretName="${{env.connectionSecretName}}" \
             

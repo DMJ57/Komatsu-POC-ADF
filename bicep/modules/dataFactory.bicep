@@ -1,5 +1,11 @@
 param dataFactoryName string
 param location string = resourceGroup().location
+// Parameters for Blob Storage
+
+param keyVaultName string
+param blobStorageAccountName string
+param blobStorageAccountKeySecretName string
+
 
 resource adf 'Microsoft.DataFactory/factories@2018-06-01' = {
   name: dataFactoryName
@@ -24,7 +30,36 @@ resource adf 'Microsoft.DataFactory/factories@2018-06-01' = {
         value: 'your-api-key-here'
       }
     }
+    
   }
 }
 
+// Linked Service for Azure Key Vault
+resource keyVaultLinkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
+  name: 'AzureKeyVaultLinkedService'
+  parent: adf
+  properties: {
+    type: 'AzureKeyVault'
+    typeProperties: {
+      // Referencing the Key Vault Secret
+      baseUrl: 'https://${keyVaultName}.vault.azure.net/'
+    }
+  }
+}
+
+// Linked Service for Azure Blob Storage (with Key Vault secret reference)
+resource blobStorageLinkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
+  name: 'AzureBlobStorageLinkedService'
+  parent: adf
+  properties: {
+    type: 'AzureBlobStorage'
+    typeProperties: {
+      connectionString: 'DefaultEndpointsProtocol=https;AccountName=${blobStorageAccountName};AccountKey=@{linkedService("AzureKeyVaultLinkedService").secret("${blobStorageAccountKeySecretName}")};EndpointSuffix=core.windows.net'
+    }
+  }
+}
+
+output keyVaultLinkedServiceId string = keyVaultLinkedService.id
+
 output dataFactoryId string = adf.id
+output blobLinkedServiceId string = blobStorageLinkedService.id
