@@ -33,7 +33,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Install jq
-      run: echo '${env.adfName}'
+      run: echo ${{env.adfName}}
 
     - name: Log in to Azure
       uses: azure/login@v2
