@@ -17,8 +17,8 @@ on:
         required: true
 
 env: 
-  adfName: $(jq -r ".adfName" ../bicep/parameters/${{ inputs.environment }}Parameters.json)
-  resourceGroupName: $(jq -r ".resourceGroupName" ../bicep/parameters/${{ github.event.inputs.environment }}Parameters.json)
+  adfName: $(jq -r ".adfName" ./bicep/parameters/${{ inputs.environment }}Parameters.json)
+  resourceGroupName: $(jq -r ".resourceGroupName" ./bicep/parameters/${{ inputs.environment }}Parameters.json)
 
 jobs:
   
@@ -31,6 +31,7 @@ jobs:
 
     - name: Install jq
       run: echo ${{env.adfName}}
+           echo ${{env.resourceGroupName}}
 
     - name: Log in to Azure
       uses: azure/login@v2
