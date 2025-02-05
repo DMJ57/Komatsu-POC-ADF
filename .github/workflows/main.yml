@@ -7,6 +7,9 @@ on:
     tags:
       - 'v*'
 
+env:
+  environment: 'Dev'
+
 jobs: 
   
   build:
@@ -26,12 +29,14 @@ jobs:
                 "subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}",
                 "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
               }
-            
+  
+              
   deploy-ADF:
     needs: build
     uses: ./.github/workflows/dataFactory.yml
     with: 
       branch: feature-ADF-code
+      environment: ${ env.environment }
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}

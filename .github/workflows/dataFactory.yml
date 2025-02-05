@@ -1,9 +1,12 @@
-name: Deploy ADF LinkedService
+name: Deploy Azure Data Factory
 
 on:
   workflow_call:
     inputs:
       branch:
+        required: true
+        type: string
+      environment:
         required: true
         type: string
     secrets:
@@ -45,12 +48,12 @@ jobs:
               }
         enable-AzPSSession: true
 
-    - name: Read linkedService JSON files and deploy
-      run: |
-          az deployment group create \
-            --resource-group "komatsu" \
-            --template-file ./bicep/modules/dataFactory.bicep \
-            --parameters dataFactoryName="WithoutJson" \
-            --parameters keyVaultName="${{env.keyVaultName}}" \
-            --parameters blobStorageSecretName="${{env.connectionSecretName}}" \
+    # - name: Read linkedService JSON files and deploy
+    #   run: |
+    #       az deployment group create \
+    #         --resource-group "komatsu" \
+    #         --template-file ./bicep/modules/dataFactory.bicep \
+    #         --parameters dataFactoryName="WithoutJson" \
+    #         --parameters keyVaultName="${{env.keyVaultName}}" \
+    #         --parameters blobStorageSecretName="${{env.connectionSecretName}}" \
             

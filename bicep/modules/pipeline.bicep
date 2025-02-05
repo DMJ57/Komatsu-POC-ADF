@@ -1,24 +1,23 @@
-targetScope = 'resourceGroup'  // Set targetScope to resourceGroup
+// targetScope = 'resourceGroup'  // Set targetScope to resourceGroup
 
-param dataFactoryName string
-param pipelines array
+// param dataFactoryName string
+// param pipelines array
 
-param properties object 
+// param properties object 
 
 
 
-resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
-  name: dataFactoryName
-  location: 'eastus'
-  identity: {
-    type: 'SystemAssigned'
-  }
-  properties:properties
-}
+// resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
+//   name: dataFactoryName
+//   location: 'eastus'
+//   identity: {
+//     type: 'SystemAssigned'
+//   }
+//   properties:properties
+// }
 
-resource pipelinesResource 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = [for pipeline in pipelines: {
-  parent: dataFactory
-  name: pipeline.name
-  properties: pipeline.definition.properties
-}]
-
+// resource pipelinesResource 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = [for pipeline in pipelines: {
+//   parent: dataFactory
+//   name: pipeline.name
+//   properties: pipeline.definition.properties
+// }]

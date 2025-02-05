@@ -46,6 +46,7 @@ jobs:
         enable-AzPSSession: true
 
     - name: Read linkedService JSON files and deploy
+      if: success()
       run: |
           factory1=$(cat ./factory/ADF.json)
           # Ensure the globalParameters are passed correctly
