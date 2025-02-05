@@ -36,7 +36,7 @@ jobs:
     uses: ./.github/workflows/dataFactory.yml
     with: 
       branch: feature-ADF-code
-      environment: ${ env.environment }
+      environment: ${{ github.env.environment }}
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
