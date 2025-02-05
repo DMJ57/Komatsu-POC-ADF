@@ -20,7 +20,7 @@ on:
         required: true
 
 env: 
-  adfName: $(jq -r ".adfName" ../bicep/parameters/${{ github.event.inputs.environment }}Parameters.json)
+  adfName: $(jq -r ".adfName" ../bicep/parameters/${{ inputs.environment }}Parameters.json)
   resourceGroupName: $(jq -r ".resourceGroupName" ../bicep/parameters/${{ github.event.inputs.environment }}Parameters.json)
 
 jobs:
