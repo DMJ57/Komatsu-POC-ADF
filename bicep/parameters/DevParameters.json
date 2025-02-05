@@ -1,0 +1,8 @@
+{
+    "resourceGroupName": "komatsu-dev",
+    "location": "eastus",
+    "adfName": "test-adf",
+    "keyVaultName": "kx1-demo-test",
+    "connectionSecretName": "kx-demo-constring-test",
+    "credentialSecretName": "kx-demo-cred-test"
+  }
