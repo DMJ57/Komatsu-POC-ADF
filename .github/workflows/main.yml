@@ -1,5 +1,3 @@
-name: Deploy ADF Components
-
 on:
   push:
     branches:
@@ -7,16 +5,12 @@ on:
     tags:
       - 'v*'
 
-env:
-  environment: Dev
 
 jobs: 
-          
   deploy-ADF:
     uses: ./.github/workflows/dataFactory.yml
-    with: 
-      branch: feature-ADF-code
-      environment: ${{ env.environment }}
+    with:
+      environment: Dev
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -32,50 +26,3 @@ jobs:
   #     AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
   #     AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
   #     AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  #     AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-
-  # deploy-DataSets:
-  #   needs: deploy-LinkedService
-  #   uses: ./.github/workflows/DataSets.yml
-  #   with: 
-  #     branch: 'feature-*'
-  #   secrets:
-  #     AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  #     AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  #     AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  #     AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-
-  # deploy-DataFlow:
-  #   needs: deploy-DataSets
-  #   uses: ./.github/workflows/DataFlow.yml
-  #   with: 
-  #     branch: 'feature-*'
-  #   secrets:
-  #     AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  #     AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  #     AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  #     AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-
-  # deploy-Pipeline:
-  #   needs: deploy-DataFlow
-  #   uses: ./.github/workflows/Pipeline.yml
-  #   with: 
-  #     branch: 'feature-*'
-  #   secrets:
-  #     AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  #     AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  #     AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  #     AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-    
-  # deploy-Trigger:
-  #   needs: deploy-Pipeline
-  #   uses: ./.github/workflows/Trigger.yml
-  #   with: 
-  #     branch: 'feature-*'
-  #   secrets:
-  #     AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  #     AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  #     AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  #     AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-
-      
