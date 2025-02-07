@@ -6,15 +6,18 @@ on:
       branch:
         required: true
         type: string
-    secrets:
       AZURE_CLIENT_ID:
         required: true
+        type: string
       AZURE_CLIENT_SECRET:
         required: true
+        type: string
       AZURE_SUBSCRIPTION_ID:
         required: true
+        type: string
       AZURE_TENANT_ID:
         required: true
+        type: string
 
 env: 
   keyVaultName: 'kx1-demo-dev'
