@@ -29,11 +29,11 @@ jobs:
     steps:
       - name: Display Secrets
         run: |
-          echo ${{ secrets.AZURE_CLIENT_ID }}
-          echo ${{ secrets.AZURE_CLIENT_SECRET }}
-          echo ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          echo ${{ secrets.AZURE_TENANT_ID }}
-          echo ${{ github.env.environment }}
+          echo ${{ env.AZURE_CLIENT_ID }}
+          echo ${{ env.AZURE_CLIENT_SECRET }}
+          echo ${{ env.AZURE_SUBSCRIPTION_ID }}
+          echo ${{ env.AZURE_TENANT_ID }}
+          echo ${{ env.environment }}
 
   Deploy-Data-Factory:
         uses: ./.github/workflows/dataFactory.yml
