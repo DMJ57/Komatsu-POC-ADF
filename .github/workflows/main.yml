@@ -24,6 +24,13 @@ jobs:
           echo "AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
           echo "environment=Dev" >> $GITHUB_ENV
 
+    outputs:
+      AZURE_CLIENT_ID: ${{ steps.set_secrets.outputs.AZURE_CLIENT_ID }}
+      AZURE_CLIENT_SECRET: ${{ steps.set_secrets.outputs.AZURE_CLIENT_SECRET }}
+      AZURE_TENANT_ID: ${{ steps.set_secrets.outputs.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ steps.set_secrets.outputs.AZURE_SUBSCRIPTION_ID }}
+      environment: ${{ steps.set_secrets.outputs.environment }}
+
   dispaly-Secrets:
     runs-on: ubuntu-latest
     steps:
@@ -33,16 +40,16 @@ jobs:
           echo $AZURE_CLIENT_SECRET
           echo $AZURE_SUBSCRIPTION_ID
           echo $AZURE_TENANT_ID
-          echo $environment
+          echo ${{needs.read-secrets.outputs.environment}}
 
   Deploy-Data-Factory:
         uses: ./.github/workflows/dataFactory.yml
         with:
           environment: $environment
-          AZURE_CLIENT_ID: $AZURE_CLIENT_ID
-          AZURE_CLIENT_SECRET: $AZURE_CLIENT_SECRET
-          AZURE_SUBSCRIPTION_ID: $AZURE_SUBSCRIPTION_ID
-          AZURE_TENANT_ID: $AZURE_TENANT_ID
+          AZURE_CLIENT_ID: ${{needs.read-secrets.outputs.AZURE_CLIENT_ID}}
+          AZURE_CLIENT_SECRET: ${{needs.read-secrets.outputs.AZURE_CLIENT_SECRET}}
+          AZURE_SUBSCRIPTION_ID: ${{needs.read-secrets.outputs.AZURE_SUBSCRIPTION_ID}}
+          AZURE_TENANT_ID: ${{needs.read-secrets.outputs.AZURE_TENANT_ID}}
 
   # deploy-LinkedService:
   #   needs: build
