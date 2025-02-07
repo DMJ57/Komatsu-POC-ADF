@@ -52,17 +52,6 @@ jobs:
   #         AZURE_TENANT_ID: ${{needs.read-secrets.outputs.AZURE_TENANT_ID}}
 
   deploy-LinkedService:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Secrets
-        run: |
-            echo "clienId"="${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
-
-
-      - name: Deploy Linked Service
-        uses: ./.github/workflows/LinkedService.yml
-        with: 
-          branch: 'feature-*'
+    uses: ./.github/workflows/LinkedService.yml
+    with: 
+      branch: 'feature-*'
