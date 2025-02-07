@@ -27,11 +27,11 @@ jobs:
   Deploy-Data-Factory:
         uses: ./.github/workflows/dataFactory.yml
         with:
-          environment: ${{ github.env.environment }}
-          AZURE_CLIENT_ID: ${{ github.env.AZURE_CLIENT_ID }}
-          AZURE_CLIENT_SECRET: ${{ github.env.AZURE_CLIENT_SECRET }}
-          AZURE_SUBSCRIPTION_ID: ${{ github.env.AZURE_SUBSCRIPTION_ID }}
-          AZURE_TENANT_ID: ${{ github.env.AZURE_TENANT_ID }}
+          environment: ${{ github.event.inputs.environment }}
+          AZURE_CLIENT_ID: ${{ github.event.inputs.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ github.event.inputs.AZURE_CLIENT_SECRET }}
+          AZURE_SUBSCRIPTION_ID: ${{ github.event.inputs.AZURE_SUBSCRIPTION_ID }}
+          AZURE_TENANT_ID: ${{ github.event.inputs.AZURE_TENANT_ID }}
             
 
   # deploy-LinkedService:
