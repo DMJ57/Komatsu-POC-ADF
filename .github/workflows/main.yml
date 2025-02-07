@@ -22,24 +22,12 @@ jobs:
           echo "AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}" >> $GITHUB_ENV
           echo "AZURE_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
           echo "AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
-  build:
-    runs-on: ubuntu-latest
+          echo "envionment=Dev" >> $GITHUB_ENV
 
-    env:
-      AZURE_CLIENT_ID: ${{ github.env.AZURE_CLIENT_ID }}
-      AZURE_CLIENT_SECRET: ${{ github.env.AZURE_CLIENT_SECRET }}
-      AZURE_SUBSCRIPTION_ID: ${{ github.env.AZURE_SUBSCRIPTION_ID }}
-      AZURE_TENANT_ID: ${{ github.env.AZURE_TENANT_ID }}
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-
-      - name: Deploy Data Factory
+  Deploy-Data-Factory:
         uses: ./.github/workflows/dataFactory.yml
         with:
-          environment: Dev
+          environment: ${{ github.env.environment }}
           AZURE_CLIENT_ID: ${{ github.env.AZURE_CLIENT_ID }}
           AZURE_CLIENT_SECRET: ${{ github.env.AZURE_CLIENT_SECRET }}
           AZURE_SUBSCRIPTION_ID: ${{ github.env.AZURE_SUBSCRIPTION_ID }}
