@@ -35,6 +35,11 @@ jobs:
     - name: Install jq
       run: echo ${{env.adfName}}
            echo ${{env.resourceGroupName}}
+           echo ${{inputs.environment}}
+           echo ${{inputs.AZURE_CLIENT_ID}}
+           echo ${{inputs.AZURE_CLIENT_SECRET}}
+           echo ${{inputs.AZURE_SUBSCRIPTION_ID}}
+           echo ${{inputs.AZURE_TENANT_ID}}
 
     - name: Log in to Azure
       uses: azure/login@v2
