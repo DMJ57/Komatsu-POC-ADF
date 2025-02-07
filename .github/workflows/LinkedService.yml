@@ -6,18 +6,6 @@ on:
       branch:
         required: true
         type: string
-      AZURE_CLIENT_ID:
-        required: true
-        type: string
-      AZURE_CLIENT_SECRET:
-        required: true
-        type: string
-      AZURE_SUBSCRIPTION_ID:
-        required: true
-        type: string
-      AZURE_TENANT_ID:
-        required: true
-        type: string
 
 env: 
   keyVaultName: 'kx1-demo-dev'
@@ -41,10 +29,10 @@ jobs:
       with:
         creds: >
               {
-                "clientId":"${{ inputs.AZURE_CLIENT_ID }}",
-                "clientSecret":"${{ inputs.AZURE_CLIENT_SECRET }}",
-                "subscriptionId":"${{ inputs.AZURE_SUBSCRIPTION_ID }}",
-                "tenantId":"${{ inputs.AZURE_TENANT_ID }}"
+                "clientId":"${{ secrets.AZURE_CLIENT_ID }}",
+                "clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}",
+                "subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}",
+                "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
               }
         enable-AzPSSession: true
 
@@ -69,7 +57,7 @@ jobs:
           done
           echo "Deploying Linked Service: $linked_service..."
           az datafactory linked-service create --factory-name komatsu-test-poc --resource-group komatsu-poc \
-            --name $linked_service --json-file "linkedService/$linked_service.json"
+            --template-file ./bicep/modules/linkedService.bicep  "linkedService/$linked_service.json"
           deployed+=("$linked_service")
         }
 
