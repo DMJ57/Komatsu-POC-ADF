@@ -23,6 +23,10 @@ jobs:
 
     - name: Install jq
       run: sudo apt-get install jq
+           echo ${{secrets.AZURE_CLIENT_ID}}
+           echo ${{secrets.AZURE_CLIENT_SECRET}}
+           echo ${{secrets.AZURE_SUBSCRIPTION_ID}}
+           echo ${{secrets.AZURE_TENANT_ID}}
 
     - name: Log in to Azure
       uses: azure/login@v2
