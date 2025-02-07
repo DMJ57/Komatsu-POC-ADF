@@ -34,15 +34,15 @@ jobs:
   dispaly-Secrets:
     runs-on: ubuntu-latest
     steps:
-      - name: Display Secrets
+      - shell: bash
+        env:
+          environment: Dev
         run: |
-          echo $AZURE_CLIENT_ID
-          echo $AZURE_CLIENT_SECRET
-          echo $AZURE_SUBSCRIPTION_ID
-          echo $AZURE_TENANT_ID
-          echo ${{needs.read-secrets.outputs.environment}}
+          example-command "$environment"
+          
+        
 
-  Deploy-Data-Factory:
+      - name:
         uses: ./.github/workflows/dataFactory.yml
         with:
           environment: $environment
@@ -51,12 +51,12 @@ jobs:
           AZURE_SUBSCRIPTION_ID: ${{needs.read-secrets.outputs.AZURE_SUBSCRIPTION_ID}}
           AZURE_TENANT_ID: ${{needs.read-secrets.outputs.AZURE_TENANT_ID}}
 
-  # deploy-LinkedService:
-  #   needs: build
-  #   uses: ./.github/workflows/LinkedService.yml
-  #   with: 
-  #     branch: 'feature-*'
-  #   secrets:
-  #     AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  #     AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  #     AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  deploy-LinkedService:
+    uses: ./.github/workflows/LinkedService.yml
+    with: 
+      branch: 'feature-*'
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}

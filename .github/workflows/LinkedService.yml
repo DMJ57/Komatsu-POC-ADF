@@ -45,36 +45,32 @@ jobs:
               }
         enable-AzPSSession: true
 
-    - name: Read linkedService JSON files and deploy
-      if: success()
+    - name: Read Linked Service Dependencies
       run: |
-          factory1=$(cat ./factory/ADF.json)
-          # Ensure the globalParameters are passed correctly
-          globalParams=$(echo "$factory1" | jq -r '.properties | @json')
-          echo "Global Parameters: $globalParams" 
-          keyVaultLinkedService=$(cat ./linkedService/AzureKeyVault.json)
-          keyVaultLinkedService=$(echo "$keyVaultLinkedService" | jq --arg keyVaultUrl "https://${{env.keyVaultName}}.vault.azure.net/" '.properties.typeProperties.baseUrl = $keyVaultUrl')
-          linkedService1=$(cat ./linkedService/AzureBlobStorage.json)
-          linkedService1=$(echo "$linkedService1" | jq --arg connectionSecretName "${{env.connectionSecretName}}" '.properties.typeProperties.connectionString.secretName = $connectionSecretName')  
+          echo "LINKED_SERVICES_DEPENDENCIES=$(cat linkedServicesDependencies.json)" >> $GITHUB_ENV
+
+    - name: Deploy Linked Services in Order
+      run: |
+        linked_services='${{ env.LINKED_SERVICES_DEPENDENCIES }}'
+        deployed=()
+
+        deploy_linked_service() {
+          local linked_service=$1
+          if [[ " ${deployed[@]} " =~ " $linked_service " ]]; then
+            echo "$linked_service already deployed."
+            return
+          fi
+          # Deploy dependencies first
+          for dep in $(echo $linked_services | jq -r ".[\"$linked_service\"][]"); do
+            deploy_linked_service $dep
+          done
+          echo "Deploying Linked Service: $linked_service..."
+          az datafactory linked-service create --factory-name komatsu-test-poc --resource-group komatsu-poc \
+            --name $linked_service --json-file "linkedService/$linked_service.json"
+          deployed+=("$linked_service")
+        }
+
+        for linked_service in $(echo $linked_services | jq -r 'keys[]'); do
+          deploy_linked_service $linked_service
+        done
           
-          linkedServices=$(jq -n \
-            --arg keyVaultLinkedService "$keyVaultLinkedService" \
-            --arg linkedService1 "$linkedService1" \
-            '[
-              {
-                "name": "AzureKeyVaultPOC", 
-                "definition": $keyVaultLinkedService | fromjson 
-              },
-              {
-                "name": "AzureBlobStoragePOC", 
-                "definition": $linkedService1 | fromjson 
-              }
-            ]')
-  
-          az deployment group create \
-            --resource-group "komatsu" \
-            --template-file ./bicep/modules/linkedservice.bicep \
-            --parameters dataFactoryName=NewDataFactoryForInrfa \
-            --parameters linkedServices="$linkedServices" \
-            --parameters properties="$globalParams"
-            
