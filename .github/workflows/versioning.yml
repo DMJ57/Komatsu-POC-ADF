@@ -3,7 +3,7 @@ name: Versioning and Tagging
 on:
   push:
     branches:
-      - main
+      - feature-ADF-code
     # This workflow will run for any push to dev, test, or main branches
 
 jobs:
